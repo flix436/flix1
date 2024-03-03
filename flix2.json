@@ -1,0 +1,21 @@
+{
+  "name": "flix2",
+  "version": "1.0.0",
+  "lockfileVersion": 3,
+  "requires": true,
+  "packages": {
+    "": {
+      "name": "flix2",
+      "version": "1.0.0",
+      "license": "MIT",
+      "dependencies": {
+        "flix2": "^1.0.0"
+      }
+    },
+    "node_modules/flix2": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/flix2/-/flix2-1.0.0.tgz",
+      "integrity": "sha512-sSc9eNKSGEQ2Wo3OY/RGAGvyNkS/gnF8uSkaMWGraWwY73oQi3cFiFU+Uh9SXfES/NvtJcuHmazO87i4H5FycQ=="
+    }
+  }
+}
