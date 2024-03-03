@@ -1,39 +1,45 @@
-// utility-functions.js
+// form-validation-library.js
 
-// Function to capitalize the first letter of a string
-function capitalizeFirstLetter(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+class FormValidator {
+  constructor() {
+    this.validationRules = {};
+    this.validationErrors = {};
   }
-  
-  // Function to check if a number is even
-  function isEven(number) {
-    return number % 2 === 0;
+
+  // Add validation rules for a form field
+  addRule(fieldName, validationFunction, errorMessage) {
+    if (!this.validationRules[fieldName]) {
+      this.validationRules[fieldName] = [];
+    }
+    this.validationRules[fieldName].push({ validationFunction, errorMessage });
   }
-  
-  // Function to generate a random integer within a specified range
-  function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+
+  // Validate the entire form
+  validateForm(formData) {
+    this.validationErrors = {};
+
+    for (const fieldName in this.validationRules) {
+      const fieldValue = formData[fieldName];
+      const fieldRules = this.validationRules[fieldName];
+
+      for (const rule of fieldRules) {
+        if (!rule.validationFunction(fieldValue)) {
+          if (!this.validationErrors[fieldName]) {
+            this.validationErrors[fieldName] = [];
+          }
+          this.validationErrors[fieldName].push(rule.errorMessage);
+        }
+      }
+    }
+
+    return Object.keys(this.validationErrors).length === 0;
   }
-  
-  // Function to check if a string is palindrome
-  function isPalindrome(str) {
-    const reversed = str.split('').reverse().join('');
-    return str === reversed;
+
+  // Get validation errors for a specific field
+  getErrorsForField(fieldName) {
+    return this.validationErrors[fieldName] || [];
   }
-  
-  // Exporting functions to make them available for external use
-  module.exports = {
-    capitalizeFirstLetter,
-    isEven,
-    randomInt,
-    isPalindrome
-  };
-  // Importing the utility functions package
-  const utils = require('utility-functions');
-  
-  // Example usage of the utility functions
-  console.log(utils.capitalizeFirstLetter('hello')); // Output: Hello
-  console.log(utils.isEven(5)); // Output: false
-  console.log(utils.randomInt(1, 10)); // Output: Random integer between 1 and 10
-  console.log(utils.isPalindrome('racecar')); // Output: true
-  
+}
+
+// Export the FormValidator class
+module.exports = FormValidator;
